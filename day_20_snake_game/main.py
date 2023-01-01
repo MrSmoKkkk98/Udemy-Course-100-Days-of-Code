@@ -1,21 +1,22 @@
 from turtle import Screen, Turtle
+from snake import Snake
+import time
 
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
 screen.title("The Snake Game")
+screen.tracer(0)
 
 # 1. Create a snake body
-x_positions = [0, -20, -40]
-all_turtles = []
+snake = Snake()
 
-for i in range(3):
-    turtle = Turtle(shape="square")
-    turtle.color("white")
-    turtle.goto(x=x_positions[i], y=0)
-    all_turtles.append(turtle)
-
-
+# 2. Move the snake
+game_is_on = True
+while game_is_on:
+    screen.update()
+    time.sleep(0.5)
+    snake.move()
 
 
 
@@ -26,9 +27,7 @@ for i in range(3):
 
 
 
-
-
-
+    
 
 
 
