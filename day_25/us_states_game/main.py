@@ -10,8 +10,8 @@ turtle.shape(image)
 score = 0
 correct_guess = []
 is_running = True
-while is_running:
-    answer_state = screen.textinput(title="Guess the State", prompt="What's another state's name?").capitalize()
+while is_running and len(correct_guess) < 50:
+    answer_state = screen.textinput(title=f"{len(correct_guess)}/50 States Correct", prompt="What's another state's name?").title()
     print(answer_state)
     data = pandas.read_csv("day_25/us_states_game/50_states.csv")
     all_states = data["state"].to_list()
