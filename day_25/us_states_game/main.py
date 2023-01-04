@@ -14,13 +14,13 @@ while is_running and len(correct_guess) < 50:
     answer_state = screen.textinput(title=f"{len(correct_guess)}/50 States Correct", prompt="What's another state's name?").title()
     data = pandas.read_csv("day_25/us_states_game/50_states.csv")
     all_states = data["state"].to_list()
+    
     if answer_state == "Exit":
-        states_to_learn = []
-        for state in all_states:
-            if state not in correct_guess:
-                states_to_learn.append(state)
-        print(states_to_learn)
+        states_to_learn = [state for state in all_states if state not in correct_guess]
+        data_to_learn = pandas.DataFrame(states_to_learn)
+        data_to_learn.to_csv("day_25/us_states_game/states_to_learn.csv")
         break
+    
     if answer_state in all_states:
         t = turtle.Turtle()
         t.hideturtle()
@@ -34,12 +34,12 @@ while is_running and len(correct_guess) < 50:
         write = t.write(answer_state, align="center")
         score += 1
         correct_guess.append(answer_state)
+        
 print(f"Your score is {score}")
 print(correct_guess)
 is_running = False
 
-data_to_learn = pandas.DataFrame(states_to_learn)
-data_to_learn.to_csv("day_25/us_states_game/states_to_learn.csv")
+
 # states_to_learn["state"] = all_states
 # print(states_to_learn)
 # states_to_learn.remove(answer_state)
