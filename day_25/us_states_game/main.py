@@ -40,10 +40,6 @@ print(correct_guess)
 is_running = False
 
 
-# states_to_learn["state"] = all_states
-# print(states_to_learn)
-# states_to_learn.remove(answer_state)
-# print(states_to_learn)
 
 
 

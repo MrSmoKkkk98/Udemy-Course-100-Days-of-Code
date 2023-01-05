@@ -1,1 +1,0 @@
-from day_9_art import logo

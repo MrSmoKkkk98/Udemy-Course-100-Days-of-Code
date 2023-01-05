@@ -42,3 +42,4 @@ all_squirrels["Count"] = squirrel_count
 
 data = pandas.DataFrame(all_squirrels)
 data.to_csv("day_25/squirrel_count.csv")
+ 
