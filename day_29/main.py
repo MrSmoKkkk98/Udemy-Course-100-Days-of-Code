@@ -1,22 +1,39 @@
 from tkinter import *
 from tkinter import messagebox
+import random
+import pyperclip
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_pass():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
+    letters_list = [random.choice(letters) for _ in range(random.randint(8, 10))]
+    symbols_list = [random.choice(symbols) for _ in range(random.randint(2, 4))]
+    numbers_list = [random.choice(numbers) for _ in range(random.randint(2, 4))]
+
+    password_list = letters_list + symbols_list + numbers_list
+    random.shuffle(password_list)
+
+    password = "".join(password_list)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
     web_info = website_entry.get()
     pass_info = password_entry.get()
     email_info = email_entry.get()
     
-    if web_info != "" or pass_info != "":
+    if web_info == "" or pass_info == "" or email_info == "":
+        messagebox.showinfo(message="You've not entered full information!")
+    else:
         is_ok = messagebox.askokcancel(title=web_info, message=f"You've entered: \nEmail: {email_info}\nPassword: {pass_info}\nIs it okay to save?")
         if is_ok:
             with open("day_29/data.txt", "a") as f:
                 f.write(f"{web_info} | {email_info} | {pass_info}\n")
                 website_entry.delete(0, "end")
                 password_entry.delete(0, "end")
-    else:
-        messagebox.showinfo(message="You've entered nothing!")
+        
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -52,7 +69,7 @@ password_entry = Entry(width=32)
 password_entry.grid(column=1, row=3)
 
 # Buttons
-button_generate_password = Button(text="Generate Password")
+button_generate_password = Button(text="Generate Password", command=generate_pass)
 button_generate_password.grid(column=2, row=3)
 
 button_add = Button(text="Add", width=48, command=save)
