@@ -7,15 +7,40 @@ from tkinter import*
 
 window = Tk()
 window.title("Password Manager")
-window.config(padx=20, pady=20, bg="white")
+window.config(padx=50, pady=50, bg="white")
 
 canvas = Canvas(width=200, height=200, bg="white", highlightthickness=0)
 logo = PhotoImage(file="day_29/logo.png")
 
 canvas.create_image(100, 100, image=logo)
-canvas.grid(column=2, row=2)
+canvas.grid(column=1, row=0)
 
+# Labels
+website_label = Label(text="Website:", bg="white")
+website_label.grid(column=0, row=1)
 
+email_label = Label(text="Email/Username:", bg="white")
+email_label.grid(column=0, row=2)
+
+password_label = Label(text="Password:", bg="white")
+password_label.grid(column=0, row=3)
+
+# Entries
+website_entry = Entry(width=50)
+website_entry.grid(column=1, row=1, columnspan=2)
+
+email_entry = Entry(width=50)
+email_entry.grid(column=1, row=2, columnspan=2)
+
+password_entry = Entry(width=32)
+password_entry.grid(column=1, row=3)
+
+# Buttons
+button_generate_password = Button(text="Generate Password")
+button_generate_password.grid(column=2, row=3)
+
+button_add = Button(text="Add", width=48)
+button_add.grid(column=1, row=4, columnspan=2)
 
 
 
