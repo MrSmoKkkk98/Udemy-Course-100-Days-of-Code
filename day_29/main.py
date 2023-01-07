@@ -1,3 +1,5 @@
+from tkinter import *
+from tkinter import messagebox
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -6,12 +8,16 @@ def save():
     pass_info = password_entry.get()
     email_info = email_entry.get()
     
-    with open("day_29/data.txt", "a") as f:
-        f.write(f"{web_info} | {email_info} | {pass_info}\n")
-        website_entry.delete(0, "end")
-        password_entry.delete(0, "end")
+    if web_info != "" or pass_info != "":
+        is_ok = messagebox.askokcancel(title=web_info, message=f"You've entered: \nEmail: {email_info}\nPassword: {pass_info}\nIs it okay to save?")
+        if is_ok:
+            with open("day_29/data.txt", "a") as f:
+                f.write(f"{web_info} | {email_info} | {pass_info}\n")
+                website_entry.delete(0, "end")
+                password_entry.delete(0, "end")
+    else:
+        messagebox.showinfo(message="You've entered nothing!")
 # ---------------------------- UI SETUP ------------------------------- #
-from tkinter import*
 
 window = Tk()
 window.title("Password Manager")
