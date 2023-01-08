@@ -74,12 +74,6 @@ def find_password():
                 
     except FileNotFoundError:
         messagebox.showinfo(title="Error", message="No Data File Found.")
-        # if email_info != new_data[web_info]["email"] or pass_info != new_data[web_info]["password"]:
-        # messagebox.showinfo(title="Error", message="No Data File Found.")
-    # except NameError:
-    #     print("key error")
-    # else:
-    #     messagebox.showinfo(title=web_info, message=f"Email: {email_info}\nPassword: {pass_info}")
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
