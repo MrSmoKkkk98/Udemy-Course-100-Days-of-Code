@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_pass():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -23,14 +24,27 @@ def save():
     web_info = website_entry.get()
     pass_info = password_entry.get()
     email_info = email_entry.get()
-    
+    new_data = {
+        web_info: {
+            "email": email_info,
+            "password": pass_info
+        }
+    }
     if web_info == "" or pass_info == "" or email_info == "":
         messagebox.showinfo(message="You've not entered full information!")
     else:
         is_ok = messagebox.askokcancel(title=web_info, message=f"You've entered: \nEmail: {email_info}\nPassword: {pass_info}\nIs it okay to save?")
         if is_ok:
-            with open("day_29/data.txt", "a") as f:
-                f.write(f"{web_info} | {email_info} | {pass_info}\n")
+            with open("day_29/data.json", "r") as data_file:
+                # Reading old data
+                data = json.load(data_file)
+                # Updating old data with new data
+                data.update(new_data)
+                
+            with open("day_29/data.json", "w") as data_file:   
+                # Saving updated data
+                json.dump(data, data_file, indent=4)
+                
                 website_entry.delete(0, "end")
                 password_entry.delete(0, "end")
         
