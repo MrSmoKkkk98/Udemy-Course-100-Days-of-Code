@@ -30,15 +30,17 @@ def save():
             "password": pass_info
         }
     }
+
     if web_info == "" or pass_info == "" or email_info == "":
         messagebox.showinfo(message="You've not entered full information!")
     else:
         messagebox.askokcancel(title=web_info, message=f"You've entered: \nEmail: {email_info}\nPassword: {pass_info}\nIs it okay to save?")
+        
         try: 
             with open("day_29/data.json", "r") as data_file:
                 # Reading old data
                 data = json.load(data_file)
-            
+        
         except FileNotFoundError:
             with open("day_29/data.json", "w") as data_file:   
                 # Saving updated data
@@ -51,10 +53,33 @@ def save():
             with open("day_29/data.json", "w") as data_file:
                 # Saving updated data
                 json.dump(data, data_file, indent=4)
+        
         finally:
             website_entry.delete(0, "end")
             password_entry.delete(0, "end")
-    
+            
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    web_info = website_entry.get()
+    try:
+        with open("day_29/data.json") as data_file:
+            data = json.load(data_file)
+            
+            if web_info in data:
+                email_info = data[web_info]["email"]
+                pass_info = data[web_info]["password"]
+                messagebox.showinfo(title=web_info, message=f"Email: {email_info}\nPassword: {pass_info}")
+            else:
+                messagebox.showinfo(title="Error", message=f"No details for {web_info} exists.")
+                
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found.")
+        # if email_info != new_data[web_info]["email"] or pass_info != new_data[web_info]["password"]:
+        # messagebox.showinfo(title="Error", message="No Data File Found.")
+    # except NameError:
+    #     print("key error")
+    # else:
+    #     messagebox.showinfo(title=web_info, message=f"Email: {email_info}\nPassword: {pass_info}")
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -78,8 +103,8 @@ password_label = Label(text="Password:", bg="white")
 password_label.grid(column=0, row=3)
 
 # Entries
-website_entry = Entry(width=50)
-website_entry.grid(column=1, row=1, columnspan=2)
+website_entry = Entry(width=32)
+website_entry.grid(column=1, row=1)
 website_entry.focus()
 
 email_entry = Entry(width=50)
@@ -96,8 +121,8 @@ button_generate_password.grid(column=2, row=3)
 button_add = Button(text="Add", width=48, command=save)
 button_add.grid(column=1, row=4, columnspan=2)
 
-
-
+search_button = Button(text="Search", width=14, command=find_password)
+search_button.grid(column=2, row=1)
 
 
 
