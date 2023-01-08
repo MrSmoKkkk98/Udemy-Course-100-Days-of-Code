@@ -1,5 +1,6 @@
 # Exercise 1
 
+import pandas
 fruits = ["Apple", "Pear", "Orange"]
 
 # TODO: Catch the exception and make sure the code runs without crashing.
@@ -35,5 +36,26 @@ for post in facebook_posts:
     
 print(total_likes)
 
+# Exercise 3: 
 
+# Catch the KeyError when a user enters a character that is not in the dictionary.
+# Provide feedback to the user when an illegal word was entered.
+# Continue promting the user to enter another word until they enter a valid word.
 
+data = pandas.read_csv("day_26/nato_alphabet/nato_phonetic_alphabet.csv")
+# TODO 1. Create a dictionary in this format:
+phonetic_dict = {row.letter: row.code for (index, row) in data.iterrows()}
+print(phonetic_dict)
+
+# TODO 2. Create a list of the phonetic code words from a word that the user inputs.
+is_asking = True
+while is_asking:
+    try:
+        word = input("Enter a word: ").upper()
+        output_list = [phonetic_dict[letter] for letter in word]
+    except KeyError:
+        print("Wrong characters were entered. Should be letters.")  
+        is_asking
+    else:    
+        print(output_list)
+        is_asking = False
