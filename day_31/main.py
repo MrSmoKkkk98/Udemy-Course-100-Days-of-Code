@@ -1,7 +1,24 @@
 from tkinter import *
+import pandas
+import random
 
 BACKGROUND_COLOR = "#B1DDC6"
 
+# Generate random word
+def random_word():
+    data_csv = pandas.read_csv("day_31/data/french_words.csv")
+    data_csv.to_dict()
+    
+    french_words = [word for word in data_csv["French"]]
+    eng_words = [word for word in data_csv["English"]]
+    
+    rand_index = random.randint(0, len(french_words) - 1)
+    rand_french_word = french_words[rand_index]
+    rand_eng_word = eng_words[rand_index]
+    
+    french_title = canvas.itemconfig(title_text, text="French")
+    current_word = canvas.itemconfig(word_text, text=rand_french_word)
+    
 # UI Setup
 window = Tk()
 window.title("Flashy")
@@ -13,20 +30,21 @@ canvas = Canvas(width=800, height=526)
 card_front = PhotoImage(file="day_31/images/card_front.png")
 canvas.create_image(400, 263, image=card_front)
 
-title_text = "French"
-word_text = "trouve"
-canvas.create_text(400, 150, text=title_text, font=('Arial', 40, 'italic'))
-canvas.create_text(400, 263, text=word_text, font=('Arial', 60, 'bold'))
+title_text = canvas.create_text(400, 150, text="", font=('Arial', 40, 'italic'))
+word_text = canvas.create_text(400, 263, text="", font=('Arial', 60, 'bold'))
+
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.grid(column=0, row=0, columnspan=2)
 
 # Buttons
 right_image = PhotoImage(file="day_31/images/right.png")
-right_button = Button(image=right_image, highlightthickness=0, border=0)
+right_button = Button(image=right_image, highlightthickness=0, border=0, command=random_word)
 right_button.grid(column=1, row=1)
 
 wrong_image = PhotoImage(file="day_31/images/wrong.png")
-wrong_button = Button(image=wrong_image, highlightthickness=0, border=0)
+wrong_button = Button(image=wrong_image, highlightthickness=0, border=0,  command=random_word)
 wrong_button.grid(column=0, row=1)
+
+random_word()
 
 window.mainloop()
