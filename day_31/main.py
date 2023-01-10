@@ -3,7 +3,7 @@ import pandas
 import random
 
 BACKGROUND_COLOR = "#B1DDC6"
-
+#test
 # Generate random word
 def random_word():
     data_csv = pandas.read_csv("day_31/data/french_words.csv")
